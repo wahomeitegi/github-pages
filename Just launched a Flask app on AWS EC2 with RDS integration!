@@ -1,0 +1,32 @@
+from PIL import Image, ImageDraw, ImageFont
+
+# Create a simple AWS architecture diagram for the project
+img = Image.new("RGB", (1000, 600), color=(255, 255, 255))
+draw = ImageDraw.Draw(img)
+
+# Define positions of the components
+components = {
+    "Client": (50, 250),
+    "Route 53\n(Optional)": (200, 250),
+    "ALB": (350, 250),
+    "EC2\n(ASG)": (500, 150),
+    "RDS\n(MySQL)": (500, 400),
+    "VPC": (475, 75),
+}
+
+# Draw lines to show flow
+draw.line([(80, 270), (230, 270)], fill="black", width=2)
+draw.line([(250, 270), (350, 270)], fill="black", width=2)
+draw.line([(370, 270), (500, 200)], fill="black", width=2)
+draw.line([(500, 300), (500, 400)], fill="black", width=2)
+
+# Draw components as rectangles with labels
+for label, (x, y) in components.items():
+    draw.rectangle([x, y, x + 120, y + 60], outline="black", width=2)
+    for i, line in enumerate(label.split("\n")):
+        draw.text((x + 10, y + 10 + i * 15), line, fill="black")
+
+# Save image
+diagram_path = "/mnt/data/aws_flask_architecture.png"
+img.save(diagram_path)
+diagram_path
